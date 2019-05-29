@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>bilifuture</title>
+		<!--创建视口-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- <link rel="stylesheet" type="text/css" href="./css/xcConfirm.css"/> -->
+		<link rel="stylesheet" href="./css/bootstrap-table.css">
+		<!--导入bootstrap.css文件-->
+		<link rel="stylesheet" href="./css/bootstrap.css" />
+		
+		<!--导入jquery.js文件-->
+		<script type="text/javascript" src="./js/jquery-3.2.1.min.js" ></script>
+		<!-- <script type="text/javascript" src="./js/xcConfirm.js"  charset="utf-8"></script> -->
+		<!--导入bootstrap.js文件-->
+		<script type="text/javascript" src="./js/bootstrap.js" ></script>
+		<script type="text/javascript" src="./js/bootstrap-table.js"></script>
+		<!--汉化文件，放在 bootstrap-table.js 后面-->
+		<script type="text/javascript" src="./js/bootstrap-table-zh-CN.js"></script>
+		<script src="./js/dialog.js"></script>
+		
+		<link rel="stylesheet" href="./css/global.css">
+		<link rel="stylesheet" href="./css/animate.css">
+		<link rel="stylesheet" href="./css/dialog.css">
+		
+	</head>
+	<body>
+		<!-- 开始打卡模态框 -->
+		<div class="modal fade" id="clockInModal" style="margin-top: 70px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		                <h4 class="modal-title" id="myModalLabel">此时此刻,你的心情是什么呢.</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<textarea id="remarkText" rows="8" style="width: 100%"></textarea>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">我在想想</button>
+		                <button type="button" class="btn btn-primary" id="querendaka">确认打卡</button>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!-- 打卡结束模态框 -->
+		<div class="modal fade" id="clockOutModal" style="margin-top: 70px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		                <h4 class="modal-title" id="myModalLabel">此时此刻,你的心情是什么呢.</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<textarea id="remarkEndText" rows="8" style="width: 100%"></textarea>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">我在想想</button>
+		                <button type="button" class="btn btn-primary" id="querenjieshu">确认结束打卡</button>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!-- 历史查看模态框模态框 -->
+		<div class="modal fade" id="viewModal" style="margin-top: 70px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		                <h4 class="modal-title" id="myModalLabel">最近5天打卡记录</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<!-- <textarea id="remarkEndText" rows="8" style="width: 100%"></textarea> -->
+						<table id="viewTable"></table>
+		            </div>
+		            <div class="modal-footer">
+		                <h5>数据来自：bilifuture</h5>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!-- 注册窗口 -->
+	    <div id="register" class="modal fade" tabindex="-1">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-body">
+	                    <button class="close" data-dismiss="modal">
+	                        <span>&times;</span>
+	                    </button>
+	                </div>
+	                <div class="modal-title">
+	                    <h1 class="text-center">注册</h1>
+	                </div>
+	                <div class="modal-body">
+	                    <form class="form-group" action="/bilifuture/registry" method="post" onsubmit=" return checkForm(this)">
+	                            <div class="form-group">
+	                                <label for="">用户名</label>
+	                                <input class="form-control" type="text" name="userId" placeholder="6-15位字母或数字">
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">密码</label>
+	                                <input class="form-control" type="password" name="pwd" placeholder="至少6位字母或数字">
+	                            </div>
+	                            <div class="form-group">
+	                            	<label for="">手机</label>
+	                                <div>
+	                                	<input class="form-control" type="text" name="tel"placeholder="请输入合法的11位手机号">
+	                                </div>
+	                                <!-- <label for="" >验证码</label>
+	                                <div>
+	                                	<input class="form-control myinput" type="text" name="smsVerify"placeholder="请输入合法的11位手机号">
+		                                <style>
+		                                	.myinput{
+		                                		display:inline-block;
+		                                		width:82%;
+		                                	}
+		                                </style>
+		                                <button class="btn btn-primary" id="sendSmsVerifyButton">发送验证码</button>
+	                                </div> 
+	                                -->
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">邮箱</label>
+	                                <input class="form-control" type="email" name="email" placeholder="例如:123@123.com">
+	                            </div>
+	                            <div class="text-right">
+	                                <button class="btn btn-primary" type="submit" onclick="checkForm()">提交</button>
+	                                <button class="btn btn-danger" data-dismiss="modal">取消</button>
+	                            </div>
+	                            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#login">已有账号？点我登录</a>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+		<!-- 登录窗口 -->
+	    <div id="login" class="modal fade">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-body">
+	                    <button class="close" data-dismiss="modal">
+	                        <span>&times;</span>
+	                    </button>
+	                </div>
+	                <div class="modal-title">
+	                    <h1 class="text-center">登录</h1>
+	                </div>
+	                <div class="modal-body" id="loginDiv">
+	                    <form class="form-group" id="loginForm">
+	                            <div class="form-group">
+	                                <label for="">用户名</label>
+	                                <input class="form-control" id="loginUserId" name="userId" type="text" placeholder="">
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">密码</label>
+	                                <input class="form-control" id="loginPwd" name="pwd" type="password" placeholder="">
+	                            </div>
+	                            <div class="text-right">
+	                                <button class="btn btn-primary" id="loginbutton">登录</button>
+	                                <button class="btn btn-danger" data-dismiss="modal">取消</button>
+	                            </div>
+	                            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#register">还没有账号？点我注册</a>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+		
+		<!--创建布局容器-->
+		<!-- <div class="container-fluid"> -->
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 column" style="margin-top: 10px;">
+					<div class="col-md-8 alert alert-success alert-dismissable" style="background-color: #ffffff;">
+						<h3 style="color: #000000">
+							今天你学习了吗？
+						</h3>
+						<br>
+						<h4 style="color: #000000">我们要振作精神，下苦功学习。下苦功，三个字，一个叫下，一个叫苦，一个叫功，一定要振作精神，下苦功。 —— 毛泽东</h4>
+					</div>
+					<div class="col-md-2">
+						<!-- 时钟 -->
+						    <div id="date" style="margin-left: 3px; margin-top: 5px;"></div>  
+					</div>
+					<div class="col-md-2" id="loginAndRegisterDiv">
+						<!-- 登录，注册入口 -->
+						<!-- <button type="button" style="color: #337ab7" id="login" class="btn btn-default">登录</button> -->
+						<!--<p></p> -->
+						<!--<button type="button" style="color: #337ab7" id="register" class="btn btn-default">注册</button> -->
+						<ul class="nav navbar-nav navbar-right">
+					        <li><a data-toggle="modal" data-target="#register" href=""><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+					        <li><a data-toggle="modal" data-target="#login" href=""><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+					    </ul>
+					</div>
+				</div>
+			</div>
+			<div class="row clearfix" >
+				<div class="col-md-12 column" >
+					<div class="row">
+						<div class="col-md-4">
+							<div class="thumbnail">
+								<img alt="300x200" src="./img/222.jpg" />
+								<div class="caption">
+									<h3>
+										Start
+									</h3>
+									<br><br>
+									<p>
+										目标既定，在学习和实践过程中无论遇到什么困难、曲折都不灰心丧气，不轻易改变自己决定的目标，而努力不懈地去学习和奋斗，如此才会有所成就，而达到自己的目的。
+									</p>
+									<p>
+										----张小厨
+									</p><br><br>
+									<p>
+										 <a class="btn btn-primary" href="javascript:void(0)" id="start">打卡开始</a> <a class="btn" href="javascript:void(0)">哼,我怕谁</a>
+									</p>
+								</div>
+								
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="thumbnail">
+								<img alt="300x200" src="./img/111.jpg" />
+								<div class="caption">
+									<h3>
+										End
+									</h3><br><br>
+									<p>
+										人永远是要学习的。死的时候，才是毕业的时候
+									</p>
+									<p>---- 肖楚女</p>
+									<br>
+									<br>
+									<br>
+									<br>
+									<br>
+									<p>
+										 <a class="btn btn-primary" href="#" id="end">打卡结束</a> <a class="btn" href="#">稍事休息吧</a>
+									</p>
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="thumbnail">
+								<img alt="300x200" src="./img/333.jpg" />
+								<div class="caption">
+									<h3>
+										你确定要看吗?
+									</h3><br><br>
+									<p>
+										在这里会展示你最近的学习时间的统计,希望你看了不会懊悔自己好久没有狠狠的逼自己.
+									</p>
+									<p>
+										---- 张小厨劝你不要看了
+									</p>	
+									<br>
+									<br>
+									<br>
+									<br>
+									<p>
+										 <a class="btn btn-primary" href="#" id="view">就看一眼</a> <a class="btn" href="#">哈哈哈哈哈哈哈</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			/* 时钟 */
+			setInterval(getDate, 1000);
+			/* 打卡开始点击事件 */
+			$("#start").click( function () { 
+				//alert('I love u');
+				
+				$('#clockInModal').modal('show');
+			});
+			$('#querendaka').click(function (){
+				//alert("111111111");
+				//发送后台ajax
+				var remarkText = $("#remarkText").val();
+				var loginUser = $("#loginUser").html();
+				//alert("当前登录会员为：" + loginUser);
+				$("#remarkText").val("");
+				$('#clockInModal').modal('hide');
+				//alert(remarkText);
+				$.ajax({
+					   type: "POST",
+					   url: "/bilifuture/clockIn",
+					   dataType : "json",
+					   data: {'userId':loginUser,'content':remarkText},
+					   success: function(data){
+						   if("S" == data.flag){
+								var txt= "恭喜亲爱的"+data.loginUser+",又一次打卡成功，坚持就是胜利！！！";
+								$('body').dialog({type:'primary',showBoxShadow:true,buttons:[{name: '确定',className: 'defalut'}],discription:txt,animateIn:'fadeInRight-hastrans',animateOut:'fadeOutRight-hastrans'});
+						   }else{
+						   		var txt= data.message;
+						   		$('body').dialog({type:'primary',showBoxShadow:true,buttons:[{name: '确定',className: 'defalut'}],discription:txt,animateIn:'fadeInRight-hastrans',animateOut:'fadeOutRight-hastrans'});
+								//window.location.href="/bilifuture/index.html";
+						   }
+					   }
+				});
+			});
+			$("#end").click( function () { 
+				//alert('Do u love me');	//querenjieshu		
+				$('#clockOutModal').modal('show');	
+			});
+			$('#querenjieshu').click(function (){
+				//alert("111111111");
+				//发送后台ajax
+				var remarkText = $("#remarkEndText").val();
+				var loginUser = $("#loginUser").html();
+				//alert("当前登录会员为：" + loginUser);
+				$("#remarkEndText").val("");
+				$('#clockOutModal').modal('hide');
+				//alert(remarkText);
+				$.ajax({
+					   type: "POST",
+					   url: "/bilifuture/clockOut",
+					   dataType : "json",
+					   data: {'userId':loginUser,'content':remarkText},
+					   success: function(data){
+						   if("S" == data.flag){
+								var txt= "恭喜亲爱的"+data.loginUser+"，结束打卡成功，坚持就是胜利！！！";
+								$('body').dialog({type:'primary',showBoxShadow:true,buttons:[{name: '确定',className: 'defalut'}],discription:txt,animateIn:'fadeInRight-hastrans',animateOut:'fadeOutRight-hastrans'});
+						   }else{
+						   		var txt= data.message;
+								$('body').dialog({type:'primary',showBoxShadow:true,buttons:[{name: '确定',className: 'defalut'}],discription:txt,animateIn:'fadeInRight-hastrans',animateOut:'fadeOutRight-hastrans'});
+						   }
+					   }
+				});
+			});
+			
+			
+			$("#view").click( function () { 
+				//https://www.cnblogs.com/laowangc/p/8875526.html
+				//alert('Are u kidding me');	 viewModal	
+				var loginUser = $("#loginUser").html();
+				if(loginUser == "" || loginUser == null || loginUser == undefined){
+					var txt= "亲爱的,请登录后查看打卡记录！！！";
+					$('body').dialog({type:'primary',showBoxShadow:true,buttons:[{name: '确定',className: 'defalut'}],discription:txt,animateIn:'fadeInRight-hastrans',animateOut:'fadeOutRight-hastrans'});
+					return ;
+				}
+				$('#viewModal').modal('show');
+				$('#viewTable').bootstrapTable({
+					pagination: true,                   //是否显示分页（*）
+					pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+					pageSize: 5,                     //每页的记录行数（*）
+					pageList: [5, 10, 15, 20],        //可供选择的每页的行数（*）
+				    url: '/bilifuture/viewByUserId?userId=' + loginUser,//'./data.json',//请求后台的URL（*）
+				    method: 'GET',                      //请求方式（*）
+				    showColumns: true,                  //是否显示所有的列（选择显示的列）
+                	showRefresh: true,                  //是否显示刷新按钮
+                	uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                	showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+                	cardView: false,                    //是否显示详细视图
+                	detailView: false,                  //是否显示父子表
+                	striped: true,                      //是否显示行间隔色
+                	//得到查询的参数
+					queryParams : function (params) {
+						//这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+					     var temp = {   
+					           rows: params.limit,                         //页面大小
+					           page: (params.offset / params.limit) + 1,   //页码
+					           sort: params.sort,      //排序列名  
+					           sortOrder: params.order //排位命令（desc，asc） 
+					     };
+					   return temp;
+					},
+                	
+				    columns: [
+				    //{	checkbox: true,  
+                    //	visible: true                  //是否显示复选框 
+                    //},
+                    {
+				        field: 'userId',
+				        title: '用户id'
+				    }, {
+				        field: 'clockType',
+				        title: '打卡类型'
+				    }, {
+				        field: 'content',
+				        title: '打卡内容'
+				    }, {
+				        field: 'time',
+				        title: '打卡时间'
+				    }
+				    ],
+				    onLoadSuccess: function () {
+                	},
+	                onLoadError: function () {
+	                    showTips("数据加载失败！");
+	                },
+	                onDblClickRow: function (row, $element) {
+	                    var id = row.ID;
+	                    EditViewById(id, 'view');
+	                },
+				});
+				
+			});
+			$("#loginbutton").click(function(e){
+				e.preventDefault();
+				var userId = $("#loginUserId").val();
+				if(userId == "" || userId == null || userId == undefined){
+					alert("用户名请重新输入！！！");
+					return false;
+				}
+				var pwd = $("#loginPwd").val();
+				if(pwd == "" || pwd == null || pwd == undefined){
+					alert("密码请重新输入！！！");
+					return false;
+				}
+				$.ajax({
+						type : "POST",
+						url : "/bilifuture/login",
+						cache : false,
+						data : $('#loginForm').serialize(),
+						dataType : "json",
+						success : function(data) {
+							//alert(JSON.stringify(data));
+							if(data.flag ==  "S"){
+								//1.关闭模态框
+								$("#login").modal("hide");
+								//2.清除现在的登录，注册按钮，写入当前用户名。并在界面显示
+								//alert("开始写入用户名信息。。。");
+								var userId = data.userId;
+								$("#loginAndRegisterDiv").html("欢迎:<h3 id='loginUser'>"+userId+"</h3><br><a href='/bilifuture/logout?userId="+userId+"' style='text-align:right'>退出登录</a>");
+							}else{
+								$("#login").modal("hide");
+								var txt= "请检查账号密码是否全部正确后，重新尝试登录！！！";
+								$('#loginForm')[0].reset();
+								$('body').dialog({type:'primary',showBoxShadow:true,buttons:[{name: '确定',className: 'defalut'}],discription:txt,animateIn:'fadeInRight-hastrans',animateOut:'fadeOutRight-hastrans'});
+							}
+						}
+					});
+				return false;
+			});
+			
+			$("#sendSmsVerifyButton").click(function sendSmsVerify(e){
+				e.preventDefault();
+				var tel = $("#tel").val();
+				//alert("要发送验证码的手机号为：" + tel);
+				var tel = $("input[name='tel']").val();
+				if(tel == "" || tel == null || tel == undefined){
+					alert("请输入正确的手机！！！");
+					return false;
+				}
+				//发送后台服务，发送短信验证码
+				
+				
+			});
+				
+		});
+		
+		function checkForm(){
+			var userId = $("input[name='userId']").val();
+			if(userId == "" || userId == null || userId == undefined){
+				alert("用户名请重新输入！！！");
+				return false;
+			}
+			var pwd = $("input[name='pwd']").val();
+			if(pwd == "" || pwd == null || pwd == undefined){
+				alert("密码请重新输入！！！");
+				return false;
+			}
+			var email = $("input[name='email']").val();
+			if(email == "" || eamil == null || email == undefined){
+				alert("邮箱请重新输入！！！");
+				return false;
+			}
+			var tel = $("input[name='tel']").val();
+			if(tel == "" || tel == null || tel == undefined){
+				alert("手机请重新输入！！！");
+				return false;
+			}
+			
+			return true;
+		}
+		
+		function getDate() {  
+            var today = new Date();  
+            var date = today.getFullYear() + "/" + twoDigits(today.getMonth() + 1) + "/" + twoDigits(today.getDate());  
+            var week = " 星期" + "日一二三四五六 ".charAt(today.getDay());  
+            var time = twoDigits(today.getHours()) + ":" + twoDigits(today.getMinutes()) + ":" + twoDigits(today.getSeconds());  
+            $("#date").html('<p style="font-size:30px;color: #000000;">'+date+'</p>'+'<p style="font-size:19px;color: #000000;">' +week+'<br>'+ time+'</p>');  
+        };  
+        function twoDigits(val) {  
+            if (val < 10) return "0" + val; return val;  
+        };  
+	
+	</script>
+	
+</html>
