@@ -19,7 +19,7 @@ import com.bilifuture.service.LoginService;
 @Controller
 public class LoginController {
 
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired
 	private LoginService loginService;
