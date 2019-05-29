@@ -17,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.bilifuture.service.LoginService;
 
 @Controller
+@RequestMapping("/bilifuture")
 public class LoginController {
 
 	private static Logger logger = LoggerFactory.getLogger(LoginController.class);

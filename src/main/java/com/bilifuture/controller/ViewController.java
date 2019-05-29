@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bilifuture.service.ViewService;
 
 @Controller
+@RequestMapping("/bilifuture")
 public class ViewController {
 
 	@Autowired

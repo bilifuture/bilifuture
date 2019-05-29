@@ -14,6 +14,7 @@ import com.bilifuture.service.ClockService;
  *	
  */
 @Controller
+@RequestMapping("/bilifuture")
 public class ClockController {
 
 	@Autowired
