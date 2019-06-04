@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@ImportResource("classpath:dubbo-*.xml")
 public class BilifutureApplication {
 
+//测试稀疏clone
 	public static void main(String[] args) {
 		SpringApplication.run(BilifutureApplication.class, args);
 	}
